@@ -1,7 +1,8 @@
 import { NavLink } from "react-router-dom";
 import clsx from "clsx";
 import css from "./Navigation.module.css";
-
+import Container from "../Container/Container.jsx";
+import Logo from "../Logo/Logo.jsx";
 const getLinkStyles = ({ isActive }) => {
   return clsx(css.link, isActive && css.active);
 };
@@ -9,7 +10,9 @@ const getLinkStyles = ({ isActive }) => {
 export default function Navigation() {
   return (
       <header className={css.header}>
-          <nav className={css.nav}>
+          <Container>
+              <nav className={css.nav}>
+                  <Logo />
                <a className={css.logo} href="/">
                 <span className={css.textLogo}>Rental</span>Car</a>
         <ul className={css.menu}>
@@ -24,7 +27,8 @@ export default function Navigation() {
             </NavLink>
           </li>
         </ul>
-      </nav>
+              </nav>
+              </Container>
     </header>
   );
 }
