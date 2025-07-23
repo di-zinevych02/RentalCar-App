@@ -13,8 +13,6 @@ export default function Navigation() {
           <Container>
               <nav className={css.nav}>
                   <Logo />
-               <a className={css.logo} href="/">
-                <span className={css.textLogo}>Rental</span>Car</a>
         <ul className={css.menu}>
           <li>
             <NavLink to="/" className={getLinkStyles}>
