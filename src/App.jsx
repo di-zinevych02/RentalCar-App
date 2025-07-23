@@ -1,9 +1,10 @@
-import { Suspense} from 'react'
+import { Suspense, lazy} from 'react'
 import { Routes, Route } from "react-router-dom";
 import Loader from "./components/Loader/Loader.jsx";
 import css from "./App.module.css";
 import Navigation from "./components/Navigation/Navigation.jsx";
-import MainPage from "./pages/MainPage/MainPage";
+
+const MainPage = lazy(() => import("./pages/MainPage/MainPage.jsx"));
 export default function App() {
   return (
     <>
