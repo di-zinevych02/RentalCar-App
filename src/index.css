@@ -53,6 +53,7 @@ textarea {
   border: none;
   background: none;
   outline: none;
+  cursor: pointer;
 }
 
 img,
@@ -66,9 +67,3 @@ svg {
 
 }
 
-button,
-input,
-select,
-textarea {
-  font: inherit;
-}

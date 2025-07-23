@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Loader from "./components/Loader/Loader.jsx";
 import css from "./App.module.css";
 import Navigation from "./components/Navigation/Navigation.jsx";
+import MainPage from "./pages/MainPage/MainPage";
 export default function App() {
   return (
     <>
@@ -10,7 +11,7 @@ export default function App() {
         <Navigation />
         <Suspense fallback={<Loader />}>
           <Routes>
-            <Route />
+            <Route path="/" element={<MainPage />}/>
 
             <Route />
           </Routes>
