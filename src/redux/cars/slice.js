@@ -4,7 +4,7 @@ import { fetchCars, fetchById } from './operations.js';
 
 const handlePending = state => {
     state.loading = true;
-    state.error = false;
+    state.error = null;
 };
 const handleRejected = (state, action) => {
     state.loading = false;
@@ -15,8 +15,10 @@ const slice = createSlice({
     initialState: {
         items: {
             allItems: {
-        page: 1,
-        items: [],
+                items: [],
+                page: 1,
+                totalItems: 0,
+                totalPages: 1,
             },
         //     filteredItems: {
         // page: 1,
@@ -29,9 +31,10 @@ const slice = createSlice({
         //   ingredient: "",
         //   title: "",
         // },
-      },
+        },
+        favorites: [],
         loading: false,
-        error: false,
+        error: null,
         currentCar: null,
         currentCarLoading: false,
     },
@@ -40,27 +43,32 @@ const slice = createSlice({
             .addCase(fetchCars.pending, handlePending)
             .addCase(fetchCars.fulfilled, (state, action) => {
                 state.loading = false;
-                state.error = false;
-                state.items.allItems = action.payload;
+                state.error = null;
+                state.items.allItems = {
+                    items: action.payload.cars,
+                    page: action.payload.page,
+                    totalItems: action.payload.totalCars,
+                    totalPages: action.payload.totalPages,
+                };
             })
             .addCase(fetchCars.rejected, handleRejected)
         
         
-      .addCase(fetchById.pending, (state) => {
-        state.currentCarLoading = true;
-        state.error = false;
-        state.currentCar = null;
-      })
-      .addCase(fetchById.fulfilled, (state, action) => {
-        state.currentCarLoading = false;
-        state.error = false;
-        state.currentCar = action.payload.data;
-      })
-      .addCase(fetchById.rejected, (state, action) => {
-        state.currentCar= null;
-        state.currentCarLoading = false;
-        state.error = action.payload.message;
-      })
-    }
+            .addCase(fetchById.pending, (state) => {
+                state.currentCarLoading = true;
+                state.error = null;
+                state.currentCar = null;
+            })
+            .addCase(fetchById.fulfilled, (state, action) => {
+                state.currentCarLoading = false;
+                state.error = null;
+                state.currentCar = action.payload;
+            })
+            .addCase(fetchById.rejected, (state, action) => {
+                state.currentCar = null;
+                state.currentCarLoading = false;
+                state.error = action.payload;
+            });
+    },
 });
 export default slice.reducer;

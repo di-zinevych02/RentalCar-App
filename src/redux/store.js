@@ -1,8 +1,8 @@
-
-
+import storage from "redux-persist/lib/storage";
 import { configureStore } from "@reduxjs/toolkit";
 import {
-  persistStore,
+    persistStore,
+    persistReducer,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -11,13 +11,19 @@ import {
   REGISTER,
 } from 'redux-persist';
 import carsReducer from "./cars/slice.js";
+import favoritesReducer from './favourites/slice.js';
+const favoritesPersistConfig = {
+  key: "favorites",
+  storage,
+};
 
+const persistedFavoritesReducer = persistReducer(favoritesPersistConfig, favoritesReducer);
 
 export const store = configureStore({
     reducer: {
         cars: carsReducer,
+        favorites: persistedFavoritesReducer,
         // filters: filtersReducer,
-        // auth: persistedAuthReducer,
 
     },
      middleware: (getDefaultMiddleware) =>
