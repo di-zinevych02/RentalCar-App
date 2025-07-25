@@ -44,13 +44,19 @@ const slice = createSlice({
             .addCase(fetchCars.fulfilled, (state, action) => {
                 state.loading = false;
                 state.error = null;
-                state.items.allItems = {
-                    items: action.payload.cars,
-                    page: action.payload.page,
-                    totalItems: action.payload.totalCars,
-                    totalPages: action.payload.totalPages,
-                };
-            })
+                const { cars, page, totalCars, totalPages } = action.payload;
+                if (page === 1) {
+    state.items.allItems.items = cars;
+  } else {
+    const existingIds = new Set(state.items.allItems.items.map(car => car.id));
+    const newUniqueCars = cars.filter(car => !existingIds.has(car.id));
+    state.items.allItems.items.push(...newUniqueCars);
+  }
+
+  state.items.allItems.page = page;
+  state.items.allItems.totalItems = totalCars;
+  state.items.allItems.totalPages = totalPages;
+})
             .addCase(fetchCars.rejected, handleRejected)
         
         
