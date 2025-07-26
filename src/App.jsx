@@ -4,6 +4,7 @@ import Loader from "./components/Loader/Loader.jsx";
 import css from "./App.module.css";
 import Navigation from "./components/Navigation/Navigation.jsx";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
+import { Toaster } from 'react-hot-toast';
 
 
 const MainPage = lazy(() => import("./pages/MainPage/MainPage.jsx"));
@@ -12,6 +13,7 @@ export default function App() {
   return (
     <>
       <div className={css.container}>
+<Toaster position="top-right" reverseOrder={false} />
         <Navigation />
         <Suspense fallback={<Loader />}>
           <Routes>

@@ -1,5 +1,5 @@
 
-
+import { createSelector } from "@reduxjs/toolkit";
 // import {selectFilterValue} from "../filters/selectors";
 
 
@@ -14,10 +14,10 @@ export const selectCurrentCarLoading = (state) =>
 
 export const selectAllCars = (state) => state.cars.items.allItems?.items || [];
 export const selectCurrentCar = (state) => state.cars.currentCar;
-export const selectPagination = (state) => {
-  const { page, totalPages } = state.cars.items.allItems;
-  return { page, totalPages };
-};
+export const selectPagination = createSelector(
+  (state) => state.cars.items.allItems,
+  ({ page, totalPages }) => ({ page, totalPages })
+);
 export const selectHasCars = (state) =>
     (state.cars.items.allItems?.items || []).length > 0;
 

@@ -13,7 +13,7 @@ import {
 import { fetchCars } from "../../redux/cars/operations.js";
 import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn.jsx";
 import Loader from "../../components/Loader/Loader.jsx";
-
+import Filters from "../../components/Filters/Filters.jsx";
 export default function CatalogPage() {
   const dispatch = useDispatch();
   const allCars = useSelector(selectAllCars);
@@ -23,30 +23,27 @@ export default function CatalogPage() {
 
   const hasShownEndToast = useRef(false);
 
-  // Завантаження першої сторінки
   useEffect(() => {
     dispatch(fetchCars({ page: 1 }));
   }, [dispatch]);
 
-  // Показати toast при помилці
   useEffect(() => {
     if (error) {
       toast.error(`Something went wrong: ${error}`);
     }
   }, [error]);
 
-  // Показати toast, коли всі машини завантажено
-  useEffect(() => {
+ useEffect(() => {
     if (
       !loading &&
-      page >= totalPages &&
       allCars.length > 0 &&
+      page >= totalPages &&
       !hasShownEndToast.current
     ) {
       toast("All cars loaded");
       hasShownEndToast.current = true;
     }
-  }, [page, totalPages, loading, allCars]);
+  }, [loading, allCars.length, page, totalPages]);
 
   // Клік на кнопку "Load More"
   const handleLoadMore = () => {
@@ -58,14 +55,15 @@ export default function CatalogPage() {
 
   return (
     <div className={css.catalogwrapper}>
-      <h2>{allCars.length} cars loaded</h2>
-      <Container>
+          <Container>
+              <Filters />
         <CarList items={allCars} />
-        {loading && <Loader />}
-        {!loading && allCars.length > 0 && page < totalPages && (
+              {loading && <Loader />}
+              
+              {!loading && allCars.length > 0 && page < totalPages && (
           <LoadMoreBtn onClick={handleLoadMore} />
         )}
-      </Container>
+    </Container>
     </div>
   );
 }
