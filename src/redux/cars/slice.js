@@ -25,6 +25,7 @@ const slice = createSlice({
                 items: [],
                 totalCars: 0,
                 totalPages: 1,
+                
                 lastFilters: {
                     brand: "",
                     rentalPrice: "",
@@ -38,6 +39,7 @@ const slice = createSlice({
         error: null,
         currentCar: null,
         currentCarLoading: false,
+        noResults: false,
     },
     extraReducers: (builder) => {
         builder
@@ -99,6 +101,7 @@ const slice = createSlice({
                 );
                 if (page === 1 || filtersChanged) {
                     state.items.filteredItems.items = newItems;
+                    state.noResults = newItems.length === 0;
                 } else {
                     const existingIds = new Set(
                         state.items.filteredItems.items.map(car => car.id)

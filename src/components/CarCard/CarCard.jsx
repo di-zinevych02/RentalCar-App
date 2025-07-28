@@ -51,7 +51,7 @@ const handleToggleFavourite = () => {
       </div>
 
       <div className={css.btnWrapper}>
-        <NavLink className={css.learnMoreBtn} to={`/cars/${carCard.id}`}>
+        <NavLink className={css.learnMoreBtn} to={`/catalog/${carCard.id}`}>
           Read more
         </NavLink>
       </div>

@@ -9,13 +9,14 @@ import {
     selectCarsError,
   selectFilteredPagination,
     selectActiveFilters, 
-  selectFilteredCars
+  selectFilteredCars,selectNoResults
 } from "../../redux/cars/selectors.js";
 import { fetchByFilters } from "../../redux/cars/operations.js";
 
 import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn.jsx";
 import Loader from "../../components/Loader/Loader.jsx";
 import Filters from "../../components/Filters/Filters.jsx";
+
 export default function CatalogPage() {
     const dispatch = useDispatch();
     const filteredCars = useSelector(selectFilteredCars);
@@ -23,7 +24,7 @@ export default function CatalogPage() {
     const error = useSelector(selectCarsError);
     const filters = useSelector(selectActiveFilters);
   const { page, totalPages } = useSelector(selectFilteredPagination);
-
+const noResults = useSelector(selectNoResults);
   const hasShownEndToast = useRef(false);
 
   useEffect(() => {
@@ -62,7 +63,7 @@ export default function CatalogPage() {
               <Filters />
         <CarList items={filteredCars} />
               {loading && <Loader />}
-              
+              {noResults && <p>No cars found with choosen filters</p>}
               {!loading && filteredCars.length > 0 && page < totalPages && (
           <LoadMoreBtn onClick={handleLoadMore} />
         )}

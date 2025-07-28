@@ -13,22 +13,16 @@ export const selectCurrentCarLoading = (state) =>
 
 export const selectAllCars = (state) => state.cars.items.allItems?.items || [];
 export const selectCurrentCar = (state) => state.cars.currentCar;
-export const selectPagination = createSelector(
-  (state) => state.cars.items.allItems,
-  ({ page, totalPages }) => ({ page, totalPages })
-);
-export const selectHasCars = (state) =>
-    (state.cars.items.allItems?.items || []).length > 0;
 
 export const selectFavourites = (state) => state.favorites.items;
 
 export const selectFilteredCars = (state) => state.cars.items.filteredItems.items;
 
 
-export const selectFilteredPagination = (state) => {
-    const { page, totalPages } = state.cars.items.filteredItems;
-    return { page, totalPages };
+export const selectFilteredPagination = createSelector(
+    (state) => state.cars.items.filteredItems,
+    ({ page, totalPages }) => ({ page, totalPages })
+);
 
-};
-export const selectActiveFilters = (state) =>
-  state.cars.items.filteredItems.lastFilters;
+export const selectActiveFilters = (state) => state.cars.items.filteredItems.lastFilters;
+export const selectNoResults = (state) => state.cars.noResults;
