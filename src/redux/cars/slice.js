@@ -78,6 +78,7 @@ const slice = createSlice({
             .addCase(fetchByFilters.pending, handlePending)
             .addCase(fetchByFilters.fulfilled, (state, action) => {
                 state.loading = false;
+                state.error = null;
                 const payload = action.payload;
                 const newItems = Array.isArray(payload.cars) ? payload.cars : [];
                 const page = Number(payload.page) || 1;

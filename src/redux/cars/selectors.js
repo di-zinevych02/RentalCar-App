@@ -1,6 +1,5 @@
 
 import { createSelector } from "@reduxjs/toolkit";
-// import {selectFilterValue} from "../filters/selectors";
 
 
 export default (state) => state.cars.items;
@@ -22,10 +21,14 @@ export const selectHasCars = (state) =>
     (state.cars.items.allItems?.items || []).length > 0;
 
 export const selectFavourites = (state) => state.favorites.items;
-// // створюємо мемоізований селектор- селектор, який викликається тільки при зміні його залежностей([selectContacts, selectNameFilter]-масив, які повертають частину стану), другий аргумент функціяБ яка отримає те шо поверне selectContacts та selectNameFilter
-// export const selectVisibleContacts = createSelector([selectContacts, selectFilterValue], (contacts, filterValue) => {
-//     // функція буде викликана тільки тоді, коли зміниться масив контактів чи коли змінюється фільтр
-//     return contacts.filter((contact) => contact.name.toLowerCase().includes(filterValue.toLowerCase()) ||
-//     contact.number.includes(filterValue)
-//     );
-// });
+
+export const selectFilteredCars = (state) => state.cars.items.filteredItems.items;
+
+
+export const selectFilteredPagination = (state) => {
+    const { page, totalPages } = state.cars.items.filteredItems;
+    return { page, totalPages };
+
+};
+export const selectActiveFilters = (state) =>
+  state.cars.items.filteredItems.lastFilters;

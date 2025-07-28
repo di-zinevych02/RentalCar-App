@@ -5,26 +5,29 @@ import { toast } from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useRef } from "react";
 import {
-  selectAllCars,
   selectCarsLoading,
-  selectPagination,
-  selectCarsError,
+    selectCarsError,
+  selectFilteredPagination,
+    selectActiveFilters, 
+  selectFilteredCars
 } from "../../redux/cars/selectors.js";
-import { fetchCars } from "../../redux/cars/operations.js";
+import { fetchByFilters } from "../../redux/cars/operations.js";
+
 import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn.jsx";
 import Loader from "../../components/Loader/Loader.jsx";
 import Filters from "../../components/Filters/Filters.jsx";
 export default function CatalogPage() {
-  const dispatch = useDispatch();
-  const allCars = useSelector(selectAllCars);
+    const dispatch = useDispatch();
+    const filteredCars = useSelector(selectFilteredCars);
   const loading = useSelector(selectCarsLoading);
-  const error = useSelector(selectCarsError);
-  const { page, totalPages } = useSelector(selectPagination);
+    const error = useSelector(selectCarsError);
+    const filters = useSelector(selectActiveFilters);
+  const { page, totalPages } = useSelector(selectFilteredPagination);
 
   const hasShownEndToast = useRef(false);
 
   useEffect(() => {
-    dispatch(fetchCars({ page: 1 }));
+    dispatch(fetchByFilters({ page: 1 }));
   }, [dispatch]);
 
   useEffect(() => {
@@ -36,19 +39,19 @@ export default function CatalogPage() {
  useEffect(() => {
     if (
       !loading &&
-      allCars.length > 0 &&
+      filteredCars.length > 0 &&
       page >= totalPages &&
       !hasShownEndToast.current
     ) {
       toast("All cars loaded");
       hasShownEndToast.current = true;
     }
-  }, [loading, allCars.length, page, totalPages]);
+  }, [loading, filteredCars, page, totalPages]);
 
-  // Клік на кнопку "Load More"
+ 
   const handleLoadMore = () => {
     if (page < totalPages) {
-      dispatch(fetchCars({ page: page + 1 }));
+      dispatch(fetchByFilters({ page: page + 1, ...filters  }));
       hasShownEndToast.current = false;
     }
   };
@@ -57,10 +60,10 @@ export default function CatalogPage() {
     <div className={css.catalogwrapper}>
           <Container>
               <Filters />
-        <CarList items={allCars} />
+        <CarList items={filteredCars} />
               {loading && <Loader />}
               
-              {!loading && allCars.length > 0 && page < totalPages && (
+              {!loading && filteredCars.length > 0 && page < totalPages && (
           <LoadMoreBtn onClick={handleLoadMore} />
         )}
     </Container>
