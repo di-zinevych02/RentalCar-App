@@ -12,7 +12,7 @@ import {
 } from 'redux-persist';
 import carsReducer from "./cars/slice.js";
 import favoritesReducer from './favourites/slice.js';
-import brandsReducer from "./brands/slice.js";
+import filtersReducer from "./filters/slice.js";
 
 const favoritesPersistConfig = {
   key: "favorites",
@@ -23,12 +23,11 @@ const persistedFavoritesReducer = persistReducer(favoritesPersistConfig, favorit
 
 export const store = configureStore({
     reducer: {
-        cars: carsReducer,
-        favorites: persistedFavoritesReducer,
-        brands: brandsReducer,
-
+    cars: carsReducer,
+    favorites: persistedFavoritesReducer,
+    filters: filtersReducer,
     },
-     middleware: (getDefaultMiddleware) =>
+    middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],

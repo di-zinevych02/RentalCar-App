@@ -1,28 +1,34 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchBrands } from "../../redux/brands/operations.js";
-import { selectBrands, selectBrandsStatus, selectBrandsError } from "../../redux/brands/selectors.js";
-import { fetchByFilters } from "../../redux/cars/operations.js";
+import { useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
+import ErrorMessage from "../ErrorMessage/ErrorMessage.jsx";
+import { fetchBrands } from "../../services/fetchBrands.js";
+import { fetchByFilters } from "../../redux/filters/operations.js";
+import css from "./Filters.module.css";
 
 export default function Filters() {
     const dispatch = useDispatch();
-    const brands = useSelector(selectBrands);
-    const status = useSelector(selectBrandsStatus);
-    const error = useSelector(selectBrandsError);
-    
-    useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchBrands());
-    }
-  }, [status, dispatch]);
-
+    const [brands, setBrands] = useState([]);
+    const [error, setError] = useState(false);
   const [filters, setFilters] = useState({
     brand: "",
     rentalPrice: "",
     minMileage: "",
     maxMileage: "",
   });
+    useEffect(() => {
+        async function getBrands() {
+            try {
+                setError(false);
+                const data = await fetchBrands();
+                setBrands(data);
+            } catch (error) {
+                setError(true);
+                toast.error(`Failed to load brands: ${error}`);
+            }
+        }
+        getBrands();
+    }, []);
 
     const handleChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
@@ -91,37 +97,37 @@ const handleMileageChange = (e) => {
   }));
 };
     return (
-        <form>
-            {status === "loading" && <p>Loading brands...</p>}
-            {status === "failed" && <p>Error loading brands: {error}</p>}
-            
-            <select name='brand' value={filters.brand} onChange={handleChange}>
-                <option value="">Choose a brand</option>
-                {brands.map((b) => (
-                    <option key={b} value={b}>{b}</option>
-                ))}
-            </select>
-            <select name='rentalPrice' value={filters.rentalPrice} onChange={handleChange}>
-                <option value="">Choose a price</option>
-                {Array.from({ length: 18 }, (_, i) => 30 + i * 10).map((price) => (
-          <option key={price} value={price}>${price}</option>
-        ))}
-            </select>
-            <input type="text"
-                name="minMileage"
-                value={formatNumber(filters.minMileage)}
-                onChange={handleMileageChange}
-                placeholder={filters.minMileage ? formatNumber(filters.minMileage) : "From"}
-            />
-            <input type="text"
-                name="maxMileage"
-                value={formatNumber(filters.maxMileage)}
-                onChange={handleMileageChange}
-                placeholder={filters.maxMileage ? formatNumber(filters.maxMileage) : "To"}
-            />
-            <button type="button" onClick={handleSearch}>
-        Search
-      </button>
-        </form>
-    )
+        <div className={css.container}>
+            {error && <ErrorMessage error={error} />}
+            <form>
+                <select name='brand' value={filters.brand} onChange={handleChange}>
+                    <option value="">Choose a brand</option>
+                    {brands.map((b) => (
+                        <option key={b} value={b}>{b}</option>
+                    ))}
+                </select>
+                <select name='rentalPrice' value={filters.rentalPrice} onChange={handleChange}>
+                    <option value="">Choose a price</option>
+                    {Array.from({ length: 18 }, (_, i) => 30 + i * 10).map((price) => (
+                        <option key={price} value={price}>${price}</option>
+                    ))}
+                </select>
+                <input type="text"
+                    name="minMileage"
+                    value={formatNumber(filters.minMileage)}
+                    onChange={handleMileageChange}
+                    placeholder={filters.minMileage ? formatNumber(filters.minMileage) : "From"}
+                />
+                <input type="text"
+                    name="maxMileage"
+                    value={formatNumber(filters.maxMileage)}
+                    onChange={handleMileageChange}
+                    placeholder={filters.maxMileage ? formatNumber(filters.maxMileage) : "To"}
+                />
+                <button type="button" onClick={handleSearch}>
+                    Search
+                </button>
+            </form>
+        </div>
+    );
 }

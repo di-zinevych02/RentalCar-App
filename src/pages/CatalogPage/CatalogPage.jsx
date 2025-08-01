@@ -5,13 +5,15 @@ import { toast } from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useRef } from "react";
 import {
-  selectCarsLoading,
+    selectCarsLoading,
     selectCarsError,
-  selectFilteredPagination,
-    selectActiveFilters, 
-  selectFilteredCars,selectNoResults
 } from "../../redux/cars/selectors.js";
-import { fetchByFilters } from "../../redux/cars/operations.js";
+import {
+    selectFilteredPagination,
+    selectActiveFilters,
+    selectFilteredCars, selectNoResults
+} from "../../redux/filters/selectors.js";
+import { fetchByFilters } from "../../redux/filters/operations.js";
 
 import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn.jsx";
 import Loader from "../../components/Loader/Loader.jsx";

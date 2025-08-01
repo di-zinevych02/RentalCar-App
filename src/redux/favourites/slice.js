@@ -22,3 +22,4 @@ const favoritesSlice = createSlice({
 
 export const { addToFavorites, removeFromFavorites } = favoritesSlice.actions;
 export default favoritesSlice.reducer;
+// redux persist

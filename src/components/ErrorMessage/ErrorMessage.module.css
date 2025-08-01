@@ -1,0 +1,9 @@
+.error {
+    padding-top: 30px;
+}
+
+.texterror {
+    font-size: 22px;
+    color: var(--text-dark);
+    font-weight: bold;
+}
