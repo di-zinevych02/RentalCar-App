@@ -30,6 +30,13 @@ const slice = createSlice({
             noResults: false,
         },
     },
+    reducers: {
+        setFilters(state, action) {
+            const { name, value } = action.payload;
+            state[name] = value;
+        },
+    },
+
     extraReducers: (builder) => {
         builder
             .addCase(fetchByFilters.pending, handlePending)
@@ -82,5 +89,5 @@ const slice = createSlice({
             });
         },
     });
-
+export const { setFilters } = slice.actions;
 export default slice.reducer;

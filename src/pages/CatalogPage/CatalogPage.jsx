@@ -15,9 +15,10 @@ import {
 } from "../../redux/filters/selectors.js";
 import { fetchByFilters } from "../../redux/filters/operations.js";
 
-import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn.jsx";
+import LoadMoreBtn from "../../components/Button/Button.jsx";
 import Loader from "../../components/Loader/Loader.jsx";
 import Filters from "../../components/Filters/Filters.jsx";
+import Button from "../../components/Button/Button.jsx";
 
 export default function CatalogPage() {
     const dispatch = useDispatch();
@@ -67,7 +68,7 @@ const noResults = useSelector(selectNoResults);
               {loading && <Loader />}
               {noResults && <p>No cars found with choosen filters</p>}
               {!loading && filteredCars.length > 0 && page < totalPages && (
-          <LoadMoreBtn onClick={handleLoadMore} />
+          <Button onClick={handleLoadMore} type="button" > Load more </Button> 
         )}
     </Container>
     </div>

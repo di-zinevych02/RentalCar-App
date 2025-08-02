@@ -1,132 +1,100 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import ErrorMessage from "../ErrorMessage/ErrorMessage.jsx";
 import { fetchBrands } from "../../services/fetchBrands.js";
 import { fetchByFilters } from "../../redux/filters/operations.js";
+import { selectFiltersValue, selectFiltersLoading, selectFiltersError } from "../../redux/filters/selectors.js";
+import {setFilters} from "../../redux/filters/slice.js";
 import css from "./Filters.module.css";
+import Loader from "../Loader/Loader.jsx";
+import Button from "../Button/Button.jsx"
 
 export default function Filters() {
-    const dispatch = useDispatch();
-    const [brands, setBrands] = useState([]);
-    const [error, setError] = useState(false);
-  const [filters, setFilters] = useState({
-    brand: "",
-    rentalPrice: "",
-    minMileage: "",
-    maxMileage: "",
-  });
+  const dispatch = useDispatch();
+  const [brands, setBrands] = useState([]);
+  const error = useSelector(selectFiltersError);
+  const loading = useSelector(selectFiltersLoading);
+  const filters = useSelector(selectFiltersValue);
+
     useEffect(() => {
         async function getBrands() {
             try {
-                setError(false);
                 const data = await fetchBrands();
                 setBrands(data);
             } catch (error) {
-                setError(true);
                 toast.error(`Failed to load brands: ${error}`);
             }
         }
         getBrands();
     }, []);
 
-    const handleChange = (e) => {
-    setFilters({ ...filters, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+      dispatch(setFilters({name, value }));
+  };
+  const parseNumber = (value) => value.replace(/\D/g, "");
+  const handleMileageChange = (e) => {
+    const { name, value } = e.target
+    const numeric = parseNumber(value);
+    dispatch(setFilters({ name, value: numeric }));
+  };
+  const handleSearch = () => {
+    dispatch(fetchByFilters({ page: 1, limit: 12, ...filters }));
   };
 
-  const handleSearch = async () => {
-    const baseParams = { page: 1, limit: 12 };
-      const { brand, rentalPrice, minMileage, maxMileage } = filters;
-      
-
-  // 1. Спроба знайти за всіма фільтрами (AND)
-  const response = await dispatch(
-    fetchByFilters({
-      ...baseParams,
-      brand,
-      rentalPrice,
-      minMileage,
-      maxMileage,
-    })
-  );
-
-  const cars = response.payload?.cars ?? [];
-
-  if (cars.length > 0) return;
-
-  // 2. Якщо не знайдено — пробуємо по одному фільтру
-
-  // Спроба 2.1: тільки за брендом
-  if (brand) {
-    const brandRes = await dispatch(fetchByFilters({ ...baseParams, brand }));
-    if (brandRes.payload?.cars?.length > 0) return;
-  }
-
-  // Спроба 2.2: тільки за ціною
-  if (rentalPrice) {
-    const priceRes = await dispatch(fetchByFilters({ ...baseParams, rentalPrice }));
-    if (priceRes.payload?.cars?.length > 0) return;
-  }
-
-  // Спроба 2.3: тільки за пробігом
-  if (minMileage || maxMileage) {
-    const mileageRes = await dispatch(
-      fetchByFilters({ ...baseParams, minMileage, maxMileage })
-    );
-    if (mileageRes.payload?.cars?.length > 0) return;
-  }
-
-  toast("No cars found for selected filters");
-};
-
-    const formatNumber = (value) => {
-  const number = value.replace(/\D/g, ""); // видаляє все, крім цифр
-  return new Intl.NumberFormat("en-US").format(Number(number));
-};
-
-const parseNumber = (value) => {
-  return value.replace(/[^0-9]/g, ""); // тільки цифри для відправки
-};
-
-const handleMileageChange = (e) => {
-  const { name, value } = e.target;
-  const numericValue = parseNumber(value);
-  setFilters((prev) => ({
-    ...prev,
-    [name]: numericValue,
-  }));
-};
     return (
-        <div className={css.container}>
-            {error && <ErrorMessage error={error} />}
-            <form>
-                <select name='brand' value={filters.brand} onChange={handleChange}>
+      <div className={css.container}>
+        <form className={css.form}>
+          {loading && <Loader/>}
+          {error && <ErrorMessage error={error} />}
+          <label htmlFor="brand-select" className={css.label}>
+            Car brand
+                <select className={css.select} id="brand-select" name='brand' value={filters.brand} onChange={handleChange}>
                     <option value="">Choose a brand</option>
-                    {brands.map((b) => (
-                        <option key={b} value={b}>{b}</option>
+                    {brands.map((brand) => (
+                        <option key={brand} value={brand}>{brand}</option>
                     ))}
-                </select>
-                <select name='rentalPrice' value={filters.rentalPrice} onChange={handleChange}>
+            </select>
+          </label>
+          <label htmlFor="price-select" className={css.label}>
+            Price/ 1 hour
+          <select className={css.select} id="price-select" name='rentalPrice' value={filters.rentalPrice} onChange={handleChange}>
                     <option value="">Choose a price</option>
                     {Array.from({ length: 18 }, (_, i) => 30 + i * 10).map((price) => (
                         <option key={price} value={price}>${price}</option>
                     ))}
-                </select>
-                <input type="text"
-                    name="minMileage"
-                    value={formatNumber(filters.minMileage)}
-                    onChange={handleMileageChange}
-                    placeholder={filters.minMileage ? formatNumber(filters.minMileage) : "From"}
-                />
-                <input type="text"
-                    name="maxMileage"
-                    value={formatNumber(filters.maxMileage)}
-                    onChange={handleMileageChange}
-                    placeholder={filters.maxMileage ? formatNumber(filters.maxMileage) : "To"}
-                />
-                <button type="button" onClick={handleSearch}>
+            </select>
+          </label>
+          <label  className={css.label}>
+          Car mileage / km
+            <div className={css.containerMileage}>
+              <input
+                className={css.input}
+                type="text"
+                name="minMileage"
+                value={filters.minMileage}
+                onChange={handleMileageChange}
+                placeholder="From"
+                pattern="[0-9]*"
+              />
+              <input
+                className={css.input}
+                type="text"
+                name="maxMileage"
+                value={filters.maxMileage}
+                onChange={handleMileageChange}
+                placeholder="To"
+                pattern="[0-9]*"
+              />
+              </div>
+          </label>
+          <Button type="button" onClick={handleSearch}>
                     Search
-                </button>
+          </Button>
+          <Button type="button" onClick={handleSearch}>
+                    Reset
+          </Button>
             </form>
         </div>
     );

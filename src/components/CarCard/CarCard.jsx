@@ -1,10 +1,9 @@
-import { NavLink } from "react-router-dom";
 import css from "./CarCard.module.css";
 import { toast } from "react-hot-toast";
 import Svg from "../Svg/Svg.jsx";
 import { useDispatch} from "react-redux";
 import { addToFavorites, removeFromFavorites } from '../../redux/favourites/slice.js';
-
+import LinkButton from "../LinkButton/LinkButton.jsx";
 
 export default function CarCard({ carCard, favourites }) {
   const dispatch = useDispatch();
@@ -51,9 +50,9 @@ const handleToggleFavourite = () => {
       </div>
 
       <div className={css.btnWrapper}>
-        <NavLink className={css.learnMoreBtn} to={`/catalog/${carCard.id}`}>
+        <LinkButton to={`/catalog/${carCard.id}`}>
           Read more
-        </NavLink>
+        </LinkButton>
       </div>
     </div>
   );
