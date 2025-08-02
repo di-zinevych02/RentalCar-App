@@ -31,12 +31,16 @@ const slice = createSlice({
         },
     },
     reducers: {
-        setFilters(state, action) {
-            const { name, value } = action.payload;
-            state[name] = value;
+        setFilters: (state, action) => {
+            state[action.payload.name] = action.payload.value;
         },
+        resetFilters: (state) => {
+            state.brand = "";
+            state.rentalPrice = "";
+            state.minMileage = "";
+            state.maxMileage = "";
+        }
     },
-
     extraReducers: (builder) => {
         builder
             .addCase(fetchByFilters.pending, handlePending)
@@ -89,5 +93,5 @@ const slice = createSlice({
             });
         },
     });
-export const { setFilters } = slice.actions;
+export const { setFilters, resetFilters } = slice.actions;
 export default slice.reducer;

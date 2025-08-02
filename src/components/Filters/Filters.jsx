@@ -5,7 +5,7 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage.jsx";
 import { fetchBrands } from "../../services/fetchBrands.js";
 import { fetchByFilters } from "../../redux/filters/operations.js";
 import { selectFiltersValue, selectFiltersLoading, selectFiltersError } from "../../redux/filters/selectors.js";
-import {setFilters} from "../../redux/filters/slice.js";
+import {setFilters, resetFilters } from "../../redux/filters/slice.js";
 import css from "./Filters.module.css";
 import Loader from "../Loader/Loader.jsx";
 import Button from "../Button/Button.jsx"
@@ -42,7 +42,9 @@ export default function Filters() {
   const handleSearch = () => {
     dispatch(fetchByFilters({ page: 1, limit: 12, ...filters }));
   };
-
+  const handleReset = () =>
+    dispatch(resetFilters());
+  
     return (
       <div className={css.container}>
         <form className={css.form}>
@@ -92,7 +94,7 @@ export default function Filters() {
           <Button type="button" onClick={handleSearch}>
                     Search
           </Button>
-          <Button type="button" onClick={handleSearch}>
+          <Button type="button" onClick={handleReset}>
                     Reset
           </Button>
             </form>
