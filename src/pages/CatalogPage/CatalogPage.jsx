@@ -14,8 +14,6 @@ import {
     selectFilteredCars, selectNoResults
 } from "../../redux/filters/selectors.js";
 import { fetchByFilters } from "../../redux/filters/operations.js";
-
-import LoadMoreBtn from "../../components/Button/Button.jsx";
 import Loader from "../../components/Loader/Loader.jsx";
 import Filters from "../../components/Filters/Filters.jsx";
 import Button from "../../components/Button/Button.jsx";

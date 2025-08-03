@@ -1,20 +1,17 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
-import ErrorMessage from "../ErrorMessage/ErrorMessage.jsx";
 import { fetchBrands } from "../../services/fetchBrands.js";
 import { fetchByFilters } from "../../redux/filters/operations.js";
-import { selectFiltersValue, selectFiltersLoading, selectFiltersError } from "../../redux/filters/selectors.js";
+import { selectFiltersValue} from "../../redux/filters/selectors.js";
 import {setFilters, resetFilters } from "../../redux/filters/slice.js";
 import css from "./Filters.module.css";
-import Loader from "../Loader/Loader.jsx";
-import Button from "../Button/Button.jsx"
+import Button from "../Button/Button.jsx";
 
 export default function Filters() {
   const dispatch = useDispatch();
   const [brands, setBrands] = useState([]);
-  const error = useSelector(selectFiltersError);
-  const loading = useSelector(selectFiltersLoading);
+
   const filters = useSelector(selectFiltersValue);
 
     useEffect(() => {
@@ -31,34 +28,50 @@ export default function Filters() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-      dispatch(setFilters({name, value }));
+    dispatch(setFilters({name, value }));
   };
-  const parseNumber = (value) => value.replace(/\D/g, "");
   const handleMileageChange = (e) => {
-    const { name, value } = e.target
-    const numeric = parseNumber(value);
-    dispatch(setFilters({ name, value: numeric }));
-  };
+  const { name, value } = e.target;
+  // Видаляємо всі символи, крім цифр
+  const numericValue = value.replace(/\D/g, "");
+  // Форматуємо з комами (тільки якщо щось ввели)
+  const formattedValue = numericValue
+    ? Number(numericValue).toLocaleString("en-US")
+    : "";
+  dispatch(setFilters({ name, value: formattedValue }));
+};
+
   const handleSearch = () => {
-    dispatch(fetchByFilters({ page: 1, limit: 12, ...filters }));
+    const cleanMileage = (val) => val.replace(/,/g, "");
+    dispatch(fetchByFilters({ page: 1, limit: 12, ...filters, minMileage: cleanMileage(filters.minMileage),
+      maxMileage: cleanMileage(filters.maxMileage), }));
   };
-  const handleReset = () =>
+  const handleReset = () => {
     dispatch(resetFilters());
-  
-    return (
+    dispatch(fetchByFilters({ page: 1, limit: 12 }));
+  }; 
+
+  return (
       <div className={css.container}>
         <form className={css.form}>
-          {loading && <Loader/>}
-          {error && <ErrorMessage error={error} />}
+          <div className={css.containerSelect}>
           <label htmlFor="brand-select" className={css.label}>
             Car brand
-                <select className={css.select} id="brand-select" name='brand' value={filters.brand} onChange={handleChange}>
+            <select
+              className={css.select}
+              id="brand-select"
+              name='brand'
+              value={filters.brand}
+              onChange={handleChange}
+            >
                     <option value="">Choose a brand</option>
                     {brands.map((brand) => (
                         <option key={brand} value={brand}>{brand}</option>
                     ))}
             </select>
-          </label>
+            </label>
+          </div>
+          <div className={css.containerSelect}>
           <label htmlFor="price-select" className={css.label}>
             Price/ 1 hour
           <select className={css.select} id="price-select" name='rentalPrice' value={filters.rentalPrice} onChange={handleChange}>
@@ -67,12 +80,14 @@ export default function Filters() {
                         <option key={price} value={price}>${price}</option>
                     ))}
             </select>
-          </label>
+            </label>
+          </div>
+          <div className={css.containerSelect}>
           <label  className={css.label}>
           Car mileage / km
             <div className={css.containerMileage}>
               <input
-                className={css.input}
+                className={css.leftInput}
                 type="text"
                 name="minMileage"
                 value={filters.minMileage}
@@ -81,7 +96,7 @@ export default function Filters() {
                 pattern="[0-9]*"
               />
               <input
-                className={css.input}
+                className={css.rightInput}
                 type="text"
                 name="maxMileage"
                 value={filters.maxMileage}
@@ -91,13 +106,18 @@ export default function Filters() {
               />
               </div>
           </label>
+          </div>
+          <div className={css.btn}>
           <Button type="button" onClick={handleSearch}>
                     Search
-          </Button>
+            </Button>
           <Button type="button" onClick={handleReset}>
                     Reset
-          </Button>
-            </form>
+            </Button>
+        </div>
+        
+      </form>
+
         </div>
     );
 }
