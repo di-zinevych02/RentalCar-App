@@ -20,7 +20,7 @@ export default function Navigation() {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/catalog" className={getLinkStyles}>
+            <NavLink to="/catalog" end className={getLinkStyles}>
               Catalog
             </NavLink>
           </li>
