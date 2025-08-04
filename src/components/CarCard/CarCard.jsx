@@ -23,7 +23,7 @@ const handleToggleFavourite = () => {
 };
 
   return (
-    <div className={css.carCardWrapper}>
+    <>
       <div className={css.imgWrapper}>
         <img className={css.img} src={carCard.img} alt="car" />
         <Svg
@@ -34,34 +34,32 @@ const handleToggleFavourite = () => {
         </div>
       <div className={css.titleWrapper}>
         <h3 className={css.title}>{carCard.brand} <span className={css.modelTitle}>{carCard.model}</span>, {carCard.year}</h3>
-        <div className={css.costWrapper}>
-          <h3 className={css.price}>${carCard.rentalPrice}</h3>
+        <h3 className={css.price}>${carCard.rentalPrice}</h3>
+      </div>
+      <div className={css.decription1}>
+        <div className={css.textWrapper1}>
+          <p className={css.text}>{carCard.address?.split(", ")[1]}</p>
         </div>
-      </div>
-      <div className={css.row}>
-        <ul className={css.list}>
-          <li className={css.item}>
-            <p className={css.text}>{carCard.address?.split(", ")[1]}</p>
-          </li>
-          <li className={css.item}>
-            <p className={css.text}>{carCard.address?.split(", ")[2]}</p>
-          </li>
-          <li className={css.item}>
+        <div className={css.textWrapper1}>
+          <p className={css.text}>{carCard.address?.split(", ")[2]}</p>
+        </div>
+        <div className={css.textWrapper1}>
           <p className={css.text}>{carCard.rentalCompany}</p>
-          </li>
-          <li className={css.item}>
-        <p className={css.text}>{carCard.type}</p>
-        </li>
-          <li className={css.item}>
-      <p className={css.text}>{carCard.mileage?.toLocaleString("en").replace(/,/g, " ")} km</p>
-      </li>
-          </ul>
-      </div>
+        </div>
+        </div>
+      <div className={css.decription2}>
+        <div className={css.textWrapper}>
+          <p className={css.text}>{carCard.type}</p>
+          </div>
+        <div className={css.textWrapper}>
+        <p className={css.text}>{carCard.mileage?.toLocaleString("en").replace(/,/g, " ")} km</p>
+        </div>
+        </div>
       <div className={css.btnWrapper}>
         <LinkButton to={`/catalog/${carCard.id}`}>
           Read more
         </LinkButton>
       </div>
-    </div>
+    </>
   );
 }

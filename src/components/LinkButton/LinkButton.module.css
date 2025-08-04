@@ -1,8 +1,9 @@
 .linkBtn {
     display: flex;
     border-radius: 12px;
-    padding: 12px 88px;
-    width: 276px;
+    padding: 12px;
+    justify-content: center;
+    max-width: 276px;
     height: 44px;
     background: var(--button);
     font-weight: 600;
