@@ -26,29 +26,37 @@ const handleToggleFavourite = () => {
     <div className={css.carCardWrapper}>
       <div className={css.imgWrapper}>
         <img className={css.img} src={carCard.img} alt="car" />
-      </div>
-
-      <div onClick={handleToggleFavourite} className={css.svgWrapper}>
         <Svg
-          styles={css.svg}
+          onClick={handleToggleFavourite}
+          styles={css.icon}
           name={isFavourite ? "activeheart" : "heart"}
         />
-      </div>
-
+        </div>
       <div className={css.titleWrapper}>
-        <h3 className={css.title}>{carCard.brand} {carCard.model}, {carCard.year}</h3>
+        <h3 className={css.title}>{carCard.brand} <span className={css.modelTitle}>{carCard.model}</span>, {carCard.year}</h3>
         <div className={css.costWrapper}>
-          <h3 className={css.price}>{carCard.rentalPrice}</h3>
+          <h3 className={css.price}>${carCard.rentalPrice}</h3>
         </div>
       </div>
-
-      <div className={css.textWrapper}>
-        <p className={css.text}>{carCard.address}</p>
-        <p className={css.text}>{carCard.rentalCompany}</p>
+      <div className={css.row}>
+        <ul className={css.list}>
+          <li className={css.item}>
+            <p className={css.text}>{carCard.address?.split(", ")[1]}</p>
+          </li>
+          <li className={css.item}>
+            <p className={css.text}>{carCard.address?.split(", ")[2]}</p>
+          </li>
+          <li className={css.item}>
+          <p className={css.text}>{carCard.rentalCompany}</p>
+          </li>
+          <li className={css.item}>
         <p className={css.text}>{carCard.type}</p>
-        <p className={css.text}>{carCard.mileage}</p>
+        </li>
+          <li className={css.item}>
+      <p className={css.text}>{carCard.mileage?.toLocaleString("en").replace(/,/g, " ")} km</p>
+      </li>
+          </ul>
       </div>
-
       <div className={css.btnWrapper}>
         <LinkButton to={`/catalog/${carCard.id}`}>
           Read more

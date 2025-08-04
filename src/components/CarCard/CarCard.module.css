@@ -1,0 +1,79 @@
+.imgWrapper {
+    justify-content: center;
+        overflow: hidden;
+        position: relative;
+        max-height: 268px;
+        overflow: hidden;
+        border-radius: 14px;
+
+}
+
+.img{
+
+    display: block;
+object-fit: cover;
+    height: auto;
+}
+.icon{
+    position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+}
+.icon:hover {
+    transform: scale(1.1);
+}
+.titleWrapper{
+    display: flex;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    justify-content: space-between;
+}
+.modelTitle{
+    color: #3470ff;
+}
+.title {
+    font-weight: 500;
+        font-size: 16px;
+        line-height: 1.25;
+        color: #101828;
+}
+.price {
+    font-weight: 500;
+        font-size: 16px;
+        line-height: 1.25;
+        color: #101828;
+}
+.row {
+    margin-bottom: 28px;
+}
+.list {
+    display: flex;
+}
+
+.item {
+    position: relative;
+
+}
+.item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 16px;
+  background-color: #dadde1;
+
+}
+.text{
+    font-weight: 400;
+        font-size: 12px;
+        line-height: 1.33333;
+        color: #8d929a;
+        margin-right: 6px;
+        margin-left: 6px;
+
+}

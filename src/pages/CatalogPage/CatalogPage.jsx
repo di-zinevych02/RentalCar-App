@@ -65,8 +65,8 @@ const noResults = useSelector(selectNoResults);
         <CarList items={filteredCars} />
               {loading && <Loader />}
               {noResults && <p>No cars found with choosen filters</p>}
-              {!loading && filteredCars.length > 0 && page < totalPages && (
-          <Button onClick={handleLoadMore} type="button" > Load more </Button> 
+        {!loading && filteredCars.length > 0 && page < totalPages && (
+            <Button onClick={handleLoadMore} type="button" > Load more </Button> 
         )}
     </Container>
     </div>

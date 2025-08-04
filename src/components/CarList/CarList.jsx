@@ -22,6 +22,6 @@ export default function CarList({ items }) {
             />
           </li>
         ))}
-    </ul>
+      </ul>
   );
 }

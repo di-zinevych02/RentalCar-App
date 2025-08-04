@@ -5,7 +5,8 @@
         line-height: 1.25;
         color: var(--white);
         border-radius: 12px;
-            padding: 12px 51px;
+            padding-top: 12px;
+            justify-content: center;
             width: 156px;
             height: 44px;
             background: var(--button);
