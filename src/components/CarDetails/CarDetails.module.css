@@ -1,0 +1,37 @@
+.carContainer{
+    display: flex;
+}
+.imageBox{
+    justify-content: flex-start;
+}
+.img {
+    width: 100%;
+    object-fit: cover;
+        max-height: 512px;
+        max-width: 640px;
+        border-radius: 19px;
+}
+.flexBox{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-left: 72px;
+}
+.titleBox {
+    display: flex;
+    flex-direction: column;
+}
+.mainCarTitle{
+    font-weight: 600;
+        font-size: 24px;
+        line-height: 1.33333;
+        color: #101828;
+}
+.id {
+    display: flex;
+}
+
+.svgConditions {
+    width: 16px;
+        height: 16px;
+}

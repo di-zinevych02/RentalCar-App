@@ -6,13 +6,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useRef } from "react";
 import {
     selectCarsLoading,
-    selectCarsError,
+  selectCarsError
 } from "../../redux/cars/selectors.js";
 import {
     selectFilteredPagination,
     selectActiveFilters,
-    selectFilteredCars, selectNoResults
-} from "../../redux/filters/selectors.js";
+    selectFilteredCars } from "../../redux/filters/selectors.js";
 import { fetchByFilters } from "../../redux/filters/operations.js";
 import Loader from "../../components/Loader/Loader.jsx";
 import Filters from "../../components/Filters/Filters.jsx";
@@ -25,9 +24,9 @@ export default function CatalogPage() {
     const error = useSelector(selectCarsError);
     const filters = useSelector(selectActiveFilters);
   const { page, totalPages } = useSelector(selectFilteredPagination);
-const noResults = useSelector(selectNoResults);
   const hasShownEndToast = useRef(false);
-
+  const isInitialLoading = loading && page === 1;
+const isLoadMoreLoading = loading && page > 1;
   useEffect(() => {
     dispatch(fetchByFilters({ page: 1 }));
   }, [dispatch]);
@@ -61,14 +60,22 @@ const noResults = useSelector(selectNoResults);
   return (
     <div className={css.catalogwrapper}>
           <Container>
-              <Filters />
-        <CarList items={filteredCars} />
-              {loading && <Loader />}
-              {noResults && <p>No cars found with choosen filters</p>}
-        {!loading && filteredCars.length > 0 && page < totalPages && (
-          <div className={css.loadMoreWrapper}>
-            <Button onClick={handleLoadMore} type="button" > Load more </Button> 
-            </div>
+        <Filters />
+        {isInitialLoading && <Loader />}
+        {!loading && error && <ErrorMessage error={error} />}
+        {!loading && !error && filteredCars.length === 0 && (
+        <p>No cars found with chosen filters</p>
+        )}
+        {!isInitialLoading && !error && filteredCars.length > 0 && (
+          <>
+            <CarList items={filteredCars} />
+            {page < totalPages && (
+              <div className={css.loadMoreWrapper}>
+                {isLoadMoreLoading && <Loader />}
+                <Button onClick={handleLoadMore} type="button" > Load more </Button>
+              </div>
+            )}
+          </>
         )}
     </Container>
     </div>

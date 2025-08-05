@@ -10,9 +10,10 @@ import {
 } from "../../redux/cars/selectors.js";
 import { fetchById } from "../../redux/cars/operations.js";
 import NotFoundPage from "../NotFoundPage/NotFoundPage.jsx";
-
+import BookForm from "../../components/BookForm/BookForm.jsx";
 import Loader from "../../components/Loader/Loader.jsx";
 import CarDetails from "../../components/CarDetails/CarDetails.jsx";
+import css from "./CarViewPage.module.css";
 
 export default function CarViewPage() {
     const { id } = useParams();
@@ -24,12 +25,21 @@ export default function CarViewPage() {
   useEffect(() => {
     if (id) dispatch(fetchById(id));
   }, [dispatch, id]);
-    return isLoading ? (
-    <Loader />
-  ) : error || !car ? (
-    <NotFoundPage />
-  ) : (
-    <CarDetails car={car} />
+  return (
+    <section className={css.section}>
+    <Container>
+      {isLoading ? (
+        <Loader />
+      ) : error || !car ? (
+        <NotFoundPage />
+        ) : (
+            <>
+      <CarDetails car={car} />
+              <BookForm />
+              </>
+      )}
+      </Container>
+      </section>
   );
 }
 

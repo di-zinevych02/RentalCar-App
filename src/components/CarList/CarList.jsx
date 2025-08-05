@@ -10,9 +10,10 @@ export default function CarList({ items }) {
     const error = useSelector(selectFiltersError);
     const loading = useSelector(selectFiltersLoading);
   return (
-    <ul className={css.list}>
-            {loading && <Loader/>}
+  <>
+      {loading && <Loader />}
         {error && <ErrorMessage error={error} />}
+    <ul className={css.list}>  
       {items &&
         items.map((carCard) => (
           <li className={css.item} key={carCard.id}>
@@ -23,5 +24,6 @@ export default function CarList({ items }) {
           </li>
         ))}
       </ul>
+      </>
   );
 }
