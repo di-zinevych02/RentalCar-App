@@ -1,6 +1,6 @@
 .header {
     background-color: var(--inputs);
-    padding: 24px;
+    padding-top: 24px;
     height: 68px;
     display: flex;
     box-sizing: border-box;

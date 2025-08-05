@@ -26,8 +26,9 @@ export default function CarViewPage() {
     if (id) dispatch(fetchById(id));
   }, [dispatch, id]);
   return (
-    <section className={css.section}>
     <Container>
+    <section className={css.section}>
+    
       {isLoading ? (
         <Loader />
       ) : error || !car ? (
@@ -38,8 +39,9 @@ export default function CarViewPage() {
               <BookForm />
               </>
       )}
-      </Container>
+      
       </section>
+      </Container>
   );
 }
 

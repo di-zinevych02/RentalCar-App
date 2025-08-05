@@ -21,7 +21,8 @@
     "react-hot-toast": "^2.5.2",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.7.0",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "yup": "^1.7.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",
