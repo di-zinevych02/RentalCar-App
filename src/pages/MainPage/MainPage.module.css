@@ -13,7 +13,9 @@
     background-position: center;
     background-repeat: no-repeat;
     height: 100vh;
+    justify-content: center;
 }
+
 .title {
 font-weight: 700;
     font-size: 60px;
@@ -32,7 +34,8 @@ font-weight: 700;
 
 }
 .linkbtn {
-    display: flex;
+
+display: flex;
     justify-content: center;
 
 }
