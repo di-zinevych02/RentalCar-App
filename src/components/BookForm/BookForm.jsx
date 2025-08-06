@@ -1,9 +1,15 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import DatePicker from "react-datepicker";
+
 import toast from 'react-hot-toast';
 import * as Yup from "yup";
 import Button from '../Button/Button.jsx';
 import css from "./BookForm.module.css";
+import { useState } from "react";
+import { registerLocale } from "react-datepicker";
+import en from "date-fns/locale/uk";
+
+registerLocale("en", en);
 
 const FeedbackSchema = Yup.object().shape({
     name: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
@@ -19,6 +25,7 @@ const initialValues = {
 }
 
 export default function BookForm() {
+    const [startDate, setStartDate] = useState(new Date());;
     const handleSubmit = (values, actions) => {
     actions.resetForm();
     toast.success("")
@@ -27,23 +34,54 @@ export default function BookForm() {
         <div className={css.bookForm}>
             <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={FeedbackSchema}>
                 <Form className={css.form}>
+                    
+                        <h3 className={css.title}>Book your car now</h3>
+                        <p className={css.description}>Stay connected! We are always ready to help you.</p>
+                <div className={css.inputsWrapper}>
                     <div className={css.inputWrapper}>
                     <Field className={css.input} type="text" name="name" placeholder="Name" />
-                        <ErrorMessage name="name" component="span" className="error" />
+                        <ErrorMessage name="name" component="span" className={css.errorMess} />
                     </div>
                     <div className={css.inputWrapper}>
                     <Field className={css.input} type="email" name="email" placeholder="Email" />
-                    <ErrorMessage name="email" component="span" className="error" />
+                    <ErrorMessage name="email" component="span" className={css.errorMess} />
                     </div>
                     <div className={css.inputWrapper}>
-                <Field className={css.input} type="date" name="date" placeholder="Booking date" />
-                <ErrorMessage name="date" component="span" className="error" />
+                        <DatePicker
+                                className={css.input}
+                                // monthClassName={css.month}
+                                // calendarClassName={css.calendar}
+                                // weekDayClassName={css.week}
+    //                             dayClassName={(date) => {
+    //     const classes = [css.day];
+    //     const today = new Date();
+    //     if (
+    //       date.getDate() === today.getDate() &&
+    //       date.getMonth() === today.getMonth() &&
+    //       date.getFullYear() === today.getFullYear()
+    //     ) {
+    //       classes.push(css.today);         
+    //     }
+    //     return classes.join(" ");
+    //   }}
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)}
+                            placeholderText="Booking date"
+                            locale="en"
+                                minDate={new Date()}
+                                
+                                showPopperArrow={false}
+                        />
+                <ErrorMessage name="date" component="span" className={css.errorMess} />
                     </div>
                     <div className={css.inputWrapper}>
                     <Field className={css.textarea} as="textarea" name="comment" placeholder="Comment" />
-        <ErrorMessage name="comment" component="span" className="error" />
+        <ErrorMessage name="comment" component="span" className={css.errorMess} />
+                        </div>
                     </div>
-                    <Button type='submit'>Send</Button>
+                    <div className={css.btnWrapper}>
+                        <Button type='submit'>Send</Button>
+                        </div>
                 </Form>
             </Formik>
 </div>

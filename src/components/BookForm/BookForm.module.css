@@ -1,0 +1,99 @@
+.bookForm{
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+    border: 1px solid #dadde1;
+        border-radius: 10px;
+        background: #fff;
+        width: 640px;
+        height: 488px;
+}
+.title{
+    font-weight: 600;
+        font-size: 20px;
+        line-height: 1.2;
+        color: #101828;
+        margin-bottom: 8px;
+}
+.description{
+    font-weight: 500;
+        font-size: 16px;
+        line-height: 1.25;
+        color: #8d929a;
+        
+}
+.inputsWrapper {
+    display: flex;
+        flex-wrap: wrap;
+        gap:14px;
+        margin-top: 24px;
+
+}
+ .inputWrapper{
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+ }
+ .input {
+    border-radius: 12px;
+        padding: 12px 20px;
+        width: 576px;
+        height: 48px;
+        background: #f7f7f7;
+ }
+.errorMess {
+    color: #595d62;
+    font-size: 12px;
+    font-weight: 400;
+    color: red;
+}
+
+.textarea{
+    border-radius: 12px;
+        padding: 12px 20px 56px 20px;
+        max-width: 576px;
+        max-height: 88px;
+        background: #f7f7f7;
+        resize: none;
+}
+.btnWrapper{
+    justify-content: center;
+    display: flex;
+    margin-top: 14px;
+}
+
+
+
+
+.today{
+    font-family: "Inter", sans-serif;
+    border-radius: 32px;
+        width: 36px;
+        height: 32px;
+        background: #3470ff;
+        font-weight: 400;
+            font-size: 14px;
+            line-height: 1.2;
+            text-align: center;
+            color: #f7f7f7;
+} 
+.selected{
+    font-family: "Inter", sans-serif;
+        border-radius: 32px;
+        width: 36px;
+        height: 32px;
+        background: #3470ff;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 1.2;
+        text-align: center;
+        color: #f7f7f7;
+}
+.day {
+font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.2;
+    text-align: center;
+    color: #101828;
+}
