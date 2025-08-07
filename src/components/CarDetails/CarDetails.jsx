@@ -1,5 +1,6 @@
 import css from "./CarDetails.module.css";
-import Svg from "../Svg/Svg.jsx"
+import Svg from "../Svg/Svg.jsx";
+import BookForm from "../../components/BookForm/BookForm.jsx";
 export default function CarDetails({car}) {
     const {
     brand,
@@ -19,13 +20,18 @@ export default function CarDetails({car}) {
     
     } = car;
     return (
-            <div className={css.carContainer}>
-
+        <div className={css.carContainer}>
+            <div className={css.leftColumn}>
+            
                         <img
                             className={css.img}
                             src={img}
                             alt={`Photo of ${brand}`}
-                        />
+                />
+            <div className={css.bookWrapper}>
+                <BookForm />
+                </div>
+                </div>
                     <div className={css.flexBox}>
                         <div className={css.titleBox}>
                     <h2 className={css.mainCarTitle}>{brand} {model}, {year}</h2>
@@ -76,7 +82,6 @@ export default function CarDetails({car}) {
                                 </li>
                             </ul>
                         </div>
-
                         <div className={css.aboutBox}>
                             <h3 className={css.titlepoint}>Accessories and functionalities: </h3>
                             <ul className={css.listCond}>

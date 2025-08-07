@@ -1,5 +1,6 @@
 .carContainer{
     display: flex;
+
 }
 
 .img {
@@ -8,6 +9,14 @@
         max-height: 512px;
         max-width: 640px;
         border-radius: 19px;
+}
+.leftColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.bookWrapper {
+    margin-top: 40px;
 }
 .flexBox{
     display: flex;

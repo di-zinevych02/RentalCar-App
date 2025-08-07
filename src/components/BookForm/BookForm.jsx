@@ -7,9 +7,18 @@ import Button from '../Button/Button.jsx';
 import css from "./BookForm.module.css";
 import { useState } from "react";
 import { registerLocale } from "react-datepicker";
-import en from "date-fns/locale/uk";
+import { enUS } from "date-fns/locale";
 
-registerLocale("en", en);
+// Копія локалі, але з модифікованими назвами днів
+const customLocale = {
+  ...enUS,
+  localize: {
+    ...enUS.localize,
+    day: (n) => ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][n],
+  },
+};
+
+registerLocale("custom", customLocale);
 
 const FeedbackSchema = Yup.object().shape({
     name: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
@@ -34,7 +43,6 @@ export default function BookForm() {
         <div className={css.bookForm}>
             <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={FeedbackSchema}>
                 <Form className={css.form}>
-                    
                         <h3 className={css.title}>Book your car now</h3>
                         <p className={css.description}>Stay connected! We are always ready to help you.</p>
                 <div className={css.inputsWrapper}>
@@ -49,25 +57,11 @@ export default function BookForm() {
                     <div className={css.inputWrapper}>
                         <DatePicker
                                 className={css.input}
-                                // monthClassName={css.month}
-                                // calendarClassName={css.calendar}
-                                // weekDayClassName={css.week}
-    //                             dayClassName={(date) => {
-    //     const classes = [css.day];
-    //     const today = new Date();
-    //     if (
-    //       date.getDate() === today.getDate() &&
-    //       date.getMonth() === today.getMonth() &&
-    //       date.getFullYear() === today.getFullYear()
-    //     ) {
-    //       classes.push(css.today);         
-    //     }
-    //     return classes.join(" ");
-    //   }}
                             selected={startDate}
                             onChange={(date) => setStartDate(date)}
                             placeholderText="Booking date"
-                            locale="en"
+                                locale="custom"
+                                dateFormat="MMM d, yyyy"
                                 minDate={new Date()}
                                 
                                 showPopperArrow={false}
