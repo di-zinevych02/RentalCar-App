@@ -4,7 +4,9 @@ import { toast } from "react-hot-toast";
 import { fetchBrands } from "../../services/fetchBrands.js";
 import { fetchByFilters } from "../../redux/filters/operations.js";
 import { selectFiltersValue} from "../../redux/filters/selectors.js";
-import {setFilters, resetFilters } from "../../redux/filters/slice.js";
+import { setFilters, resetFilters } from "../../redux/filters/slice.js";
+import Svg from "../Svg/Svg.jsx";
+import Select, { components } from 'react-select';
 import css from "./Filters.module.css";
 import Button from "../Button/Button.jsx";
 
@@ -25,10 +27,20 @@ export default function Filters() {
         }
         getBrands();
     }, []);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    dispatch(setFilters({name, value }));
+  
+  const brandOptions = brands.map((brand) => ({ value: brand, label: brand, }));
+  const priceOptions = Array.from({ length: 18 }, (_, i) => 30 + i * 10).map((price) => ({ value: price, label: price, }));
+  const DropdownIndicator = (props) => {
+  return (
+    <components.DropdownIndicator {...props}>
+      
+      {props.selectProps.menuIsOpen ? <Svg name="uparrow" styles={css.icon } /> : <Svg name="downarrow" styles={css.icon}/>}
+    </components.DropdownIndicator>
+  );
+  };
+  //props.selectProps.menuIsOpen це стан, який контролює react-select (відкрито/закрито).
+  const handleSelectChange = (selectedOption, name) => {
+    dispatch(setFilters({ name, value: selectedOption?.value || "" }));
   };
   const handleMileageChange = (e) => {
   const { name, value } = e.target;
@@ -50,6 +62,7 @@ export default function Filters() {
     dispatch(resetFilters());
     dispatch(fetchByFilters({ page: 1, limit: 12 }));
   }; 
+  
 
   return (
       <div className={css.container}>
@@ -57,30 +70,57 @@ export default function Filters() {
           <div className={css.containerSelect}>
           <label htmlFor="brand-select" className={css.label}>
             Car brand
-            <select
-              className={css.select}
-              id="brand-select"
-              name='brand'
-              value={filters.brand}
-              onChange={handleChange}
-            >
-                    <option value="">Choose a brand</option>
-                    {brands.map((brand) => (
-                        <option key={brand} value={brand}>{brand}</option>
-                    ))}
-            </select>
-            </label>
+ </label>
+            <Select
+              inputId="brand-select"
+              options={brandOptions}
+              //підключення кастомного індикатора у селект
+            components={{ DropdownIndicator }}
+            isSearchable={false}
+            placeholder="Choose a brand"
+            
+            onChange={(selectedOptions) => handleSelectChange(selectedOptions, "brand")}
+            unstyled
+              classNames={{
+                input: () => css.input,
+                container: () => css.select,
+                //Основне поле
+                control: () => css.control,
+              //   //	Дропдаун-меню
+                menu: () => css.menu,
+              //   //	Контейнер усіх опцій
+                menuList: () => css.list,
+              //   //Один пункт
+                option: () => css.option,
+                
+              }}
+            />
+            
           </div>
           <div className={css.containerSelect}>
           <label htmlFor="price-select" className={css.label}>
-            Price/ 1 hour
-          <select className={css.select} id="price-select" name='rentalPrice' value={filters.rentalPrice} onChange={handleChange}>
-                    <option value="">Choose a price</option>
-                    {Array.from({ length: 18 }, (_, i) => 30 + i * 10).map((price) => (
-                        <option key={price} value={price}>${price}</option>
-                    ))}
-            </select>
-            </label>
+            Price/ 1 hour</label>
+            <Select
+              inputId="price-select"
+              options={priceOptions}
+              //підключення кастомного індикатора у селект
+            components={{ DropdownIndicator }}
+            isSearchable={false}
+            placeholder="Choose a price"
+            unstyled
+              classNames={{
+                input: () => css.input,
+                container: () => css.select,
+                //Основне поле
+                control: () => css.control2,
+              //   //	Дропдаун-меню
+                menu: () => css.menu2,
+              //   //	Контейнер усіх опцій
+                menuList: () => css.list2,
+              //   //Один пункт
+                option: () => css.option,
+              }}
+            />
           </div>
           <div className={css.containerSelect}>
           <label  className={css.label}>
@@ -121,3 +161,21 @@ export default function Filters() {
         </div>
     );
 }
+/* <select
+              className={css.select}
+              id="brand-select"
+              name='brand'
+              value={filters.brand}
+              onChange={handleChange}
+            >
+                    <option value="">Choose a brand</option>
+                    {brands.map((brand) => (
+                        <option key={brand} value={brand}>{brand}</option>
+                    ))}
+            </select> 
+    <select className={css.select} id="price-select" name='rentalPrice' value={filters.rentalPrice} onChange={handleChange}>
+                    <option value="">Choose a price</option>
+                    {Array.from({ length: 18 }, (_, i) => 30 + i * 10).map((price) => (
+                        <option key={price} value={price}>${price}</option>
+                    ))}
+            </select> // */

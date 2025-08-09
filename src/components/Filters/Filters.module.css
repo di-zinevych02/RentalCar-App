@@ -2,13 +2,14 @@
     display: flex;
     margin-top: 84px;
     margin-bottom: 56px;
-    justify-content: center;
-    align-items: center;
-
+align-items: center; 
+  flex-wrap: wrap;
 
 }
 .form {
     display: flex;
+    flex-direction: row;
+    gap:16px;
     justify-content: center;
 }
 .label {
@@ -18,27 +19,104 @@
         color: #8d929a;
 
 }
-.containerSelect {
-    margin-left: 16px;
+
+.select{
+margin-top: 8px;
 }
 
-.select {
+.control {
+    border-radius: 12px ;
+    padding: 12px 16px;
+    width: 204px;
+    max-height: 44px;
+    background: #f7f7f7;
+    
+}
+
+.input {
+    font-family: "Manrope", sans-serif;
     font-weight: 500;
+    font-size: 16px;
+    line-height: 1.25;
+    color: #101828;
+    
+     
+}
+.icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s;
+}
+
+.menu{
+    margin-top:4px;
+    border: 1px solid #f7f7f7;
+        border-radius: 12px;
+        width: 204px;
+        max-height: 272px;
+        box-shadow: 0 4px 36px 0 rgba(0, 0, 0, 0.02);
+        background: #fff;
+overflow-y: auto;
+}
+
+/* включаємо вертикальний скрол
+
+/* Стилі скролу для Chrome, Edge, Safari */
+/* &::-webkit-scrollbar {
+    border-radius: 10px;
+        width: 8px;
+        height: 128px;
+}
+
+&::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+
+&::-webkit-scrollbar-thumb {
+    background:  #dadde1;
+    border-radius: 10px;
+} */ 
+
+.list {
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    height: 272px;
+}
+.option {
+    font-family: "Manrope", sans-serif;
+        font-weight: 500;
         font-size: 16px;
         line-height: 1.25;
-        color: #101828;
-    margin-top: 8px;
-    display: flex;
+        color: #8d929a;
+
+}
+.control2{
     border-radius: 12px;
         padding: 12px 16px;
-        width: 204px;
+        width: 196px;
         height: 44px;
         background: #f7f7f7;
 }
-
-.containerMileage {
- margin-right: 16px;
+.menu2{
+    border: 1px solid #f7f7f7;
+        border-radius: 12px;
+        width: 196px;
+        max-height: 188px;
+        box-shadow: 0 4px 36px 0 rgba(0, 0, 0, 0.02);
+            background: #fff;
 }
+.list2{
+    padding: 14px 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        height: 160px;
+}
+
+
 .leftInput{
 margin-top: 8px;
 border-right: 1px solid #dadde1;
@@ -68,3 +146,4 @@ display: flex;
 gap:10px;
 align-items: flex-end;
 }
+
