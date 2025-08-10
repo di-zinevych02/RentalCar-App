@@ -68,18 +68,18 @@ export default function Filters() {
       <div className={css.container}>
         <form className={css.form}>
           <div className={css.containerSelect}>
-          <label htmlFor="brand-select" className={css.label}>
+          <label htmlFor="brand" className={css.label}>
             Car brand
  </label>
             <Select
-              inputId="brand-select"
+              inputId="brand"
               options={brandOptions}
               //підключення кастомного індикатора у селект
             components={{ DropdownIndicator }}
             isSearchable={false}
             placeholder="Choose a brand"
-            
             onChange={(selectedOptions) => handleSelectChange(selectedOptions, "brand")}
+            value={brandOptions.find(option => option.value === filters.brand) || null}
             unstyled
               classNames={{
                 input: () => css.input,
@@ -98,15 +98,17 @@ export default function Filters() {
             
           </div>
           <div className={css.containerSelect}>
-          <label htmlFor="price-select" className={css.label}>
+          <label htmlFor="rentalPrice" className={css.label}>
             Price/ 1 hour</label>
             <Select
-              inputId="price-select"
+              inputId="rentalPrice"
               options={priceOptions}
               //підключення кастомного індикатора у селект
             components={{ DropdownIndicator }}
             isSearchable={false}
             placeholder="Choose a price"
+            onChange={(selectedOption) => handleSelectChange(selectedOption, "brand")}onChange={(selectedOption) => handleSelectChange(selectedOption, "rentalPrice")}
+            value={priceOptions.find(option => option.value === filters.rentalPrice) || null}
             unstyled
               classNames={{
                 input: () => css.input,
@@ -120,6 +122,13 @@ export default function Filters() {
               //   //Один пункт
                 option: () => css.option,
               }}
+      // форматуємо *і* випадаючий список, і обране значення
+      formatOptionLabel={(option, { context }) => {
+        if (context === "value") {
+          return `To ${option.label}$`; // у полі вводу
+        }
+        return option.label; // у списку
+      }}
             />
           </div>
           <div className={css.containerSelect}>
