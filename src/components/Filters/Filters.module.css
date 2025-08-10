@@ -2,8 +2,8 @@
     display: flex;
     margin-top: 84px;
     margin-bottom: 56px;
-align-items: center; 
-  flex-wrap: wrap;
+    align-items: center; 
+    flex-wrap: wrap;
 
 }
 .form {
@@ -28,7 +28,7 @@ margin-top: 8px;
     border-radius: 12px ;
     padding: 12px 16px;
     width: 204px;
-    max-height: 44px;
+    height: 44px;
     background: #f7f7f7;
     
 }
@@ -39,8 +39,6 @@ margin-top: 8px;
     font-size: 16px;
     line-height: 1.25;
     color: #101828;
-    
-     
 }
 .icon {
     width: 16px;
@@ -58,8 +56,6 @@ margin-top: 8px;
         z-index: 9999;
 }
 
-
-
 .list {
         padding: 8px 0px;
     /* display: flex;
@@ -68,6 +64,11 @@ margin-top: 8px;
     max-height: 272px;
     overflow-y: auto;
 
+}
+.list2 {
+    padding: 8px 0px;
+    height: 188px;
+    overflow-y: auto;
 }
 /* включаємо вертикальний скрол
 
@@ -89,13 +90,14 @@ margin-top: 8px;
 ::-webkit-scrollbar-thumb:hover{
 background-color: #dadde1;
 }
+
 .option {
     font-family: "Manrope", sans-serif;
         font-weight: 500;
         font-size: 16px;
         line-height: 1.25;
         color: #8d929a;
-        padding: 6px 18px;
+        padding: 6px 18px; 
 
 }
 .control2{
@@ -105,23 +107,7 @@ background-color: #dadde1;
         height: 44px;
         background: #f7f7f7;
 }
-.menu2{
-    margin-top: 4px;
-    border: 1px solid #f7f7f7;
-        border-radius: 12px;
-        position: absolute;
-        z-index: 9999;
-        box-shadow: 0 4px 36px 0 rgba(0, 0, 0, 0.02);
-            background: #fff;
-}
-.list2{
-    padding: 8px 0px;
-        
-        /* gap: 8px; */ 
-        max-height: 188px;
-            overflow-y: auto;
-        
-}
+
 
 .leftInput{
 margin-top: 8px;

@@ -107,7 +107,7 @@ export default function Filters() {
             components={{ DropdownIndicator }}
             isSearchable={false}
             placeholder="Choose a price"
-            onChange={(selectedOption) => handleSelectChange(selectedOption, "brand")}onChange={(selectedOption) => handleSelectChange(selectedOption, "rentalPrice")}
+            onChange={(selectedOption) => handleSelectChange(selectedOption, "rentalPrice")}
             value={priceOptions.find(option => option.value === filters.rentalPrice) || null}
             unstyled
               classNames={{
@@ -116,7 +116,7 @@ export default function Filters() {
                 //Основне поле
                 control: () => css.control2,
               //   //	Дропдаун-меню
-                menu: () => css.menu2,
+                menu: () => css.menu,
               //   //	Контейнер усіх опцій
                 menuList: () => css.list2,
               //   //Один пункт
