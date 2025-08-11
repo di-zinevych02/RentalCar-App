@@ -32,7 +32,6 @@ Web only Frontend application for booking a car with express filters by brand, p
 
 #### 🎨 UI & Styling
 
-[![Headless UI](https://img.shields.io/badge/Headless_UI-66E3FF?style=flat&logo=headlessui&logoColor=black)](https://headlessui.com/)  
 [![modern-normalize](https://img.shields.io/badge/modern--normalize-000000?style=flat)](https://github.com/sindresorhus/modern-normalize)  
 [![React Select](https://img.shields.io/badge/React_Select-61DAFB?style=flat&logo=react&logoColor=black)](https://react-select.com/)
 
