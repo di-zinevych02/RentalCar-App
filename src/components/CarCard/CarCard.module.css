@@ -1,4 +1,10 @@
+.cardWrapper{
+    height: 424px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
+}
 .imgWrapper {
     justify-content: center;
         overflow: hidden;
@@ -25,10 +31,11 @@
 .icon:hover {
     transform: scale(1.1);
 }
+
 .titleWrapper{
     display: flex;
-    margin-top: 16px;
-    margin-bottom: 8px;
+    /* margin-top: 16px;
+    margin-bottom: 8px; */
     justify-content: space-between;
 }
 .modelTitle{
@@ -47,9 +54,6 @@
         color: #101828;
 }
 
-.btnWrapper {
-    margin-top: 28px;
-}
 .textWrapper1 {
 display: flex;
 flex-direction: row;
@@ -57,8 +61,9 @@ flex-direction: row;
 
 .decription1{
 display: flex;
-
+margin-bottom: 4px;
 }
+
 .textWrapper1:not(:last-child)::after {
     content: "";
     width: 1px;
@@ -76,7 +81,7 @@ display: flex;
 }
 .decription2{
     display: flex;
-    margin-top: 4px;
+
 }
 .textWrapper {
     display: flex;
@@ -88,4 +93,8 @@ display: flex;
     height: 16px;
     background-color: #dadde1;
     margin-right: 6px;
+}
+.btnWrapper{
+    display: flex;
+
 }

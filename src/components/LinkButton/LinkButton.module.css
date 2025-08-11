@@ -3,7 +3,7 @@
     border-radius: 12px;
     padding: 12px;
     justify-content: center;
-    max-width: 276px;
+    width: 276px;
     height: 44px;
     background: var(--button);
     font-weight: 600;

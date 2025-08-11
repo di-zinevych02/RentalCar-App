@@ -23,7 +23,7 @@ const handleToggleFavourite = () => {
 };
 
   return (
-    <>
+    <div className={css.cardWrapper}>
       <div className={css.imgWrapper}>
         <img className={css.img} src={carCard.img} alt="car" />
         <Svg
@@ -31,11 +31,14 @@ const handleToggleFavourite = () => {
           styles={css.icon}
           name={isFavourite ? "activeheart" : "heart"}
         />
-        </div>
+      </div>
+
       <div className={css.titleWrapper}>
         <h3 className={css.title}>{carCard.brand} <span className={css.modelTitle}>{carCard.model}</span>, {carCard.year}</h3>
         <h3 className={css.price}>${carCard.rentalPrice}</h3>
       </div>
+      
+      <div className={css.decriptions}>
       <div className={css.decription1}>
         <div className={css.textWrapper1}>
           <p className={css.text}>{carCard.address?.split(", ")[1]}</p>
@@ -55,11 +58,14 @@ const handleToggleFavourite = () => {
         <p className={css.text}>{carCard.mileage?.toLocaleString("en").replace(/,/g, " ")} km</p>
         </div>
         </div>
+        </div>
+
       <div className={css.btnWrapper}>
         <LinkButton to={`/catalog/${carCard.id}`}>
           Read more
         </LinkButton>
       </div>
-    </>
+      </div>
+      
   );
 }

@@ -51,6 +51,10 @@ export default function Filters() {
     ? Number(numericValue).toLocaleString("en-US")
     : "";
   dispatch(setFilters({ name, value: formattedValue }));
+  };
+  const getDisplayValue = (name, rawValue) => {
+  const prefix = name === "minMileage" ? "From " : "To ";
+  return `${prefix}${rawValue}`;
 };
 
   const handleSearch = () => {
@@ -103,7 +107,7 @@ export default function Filters() {
             <Select
               inputId="rentalPrice"
               options={priceOptions}
-              //підключення кастомного індикатора у селект
+              
             components={{ DropdownIndicator }}
             isSearchable={false}
             placeholder="Choose a price"
@@ -139,7 +143,7 @@ export default function Filters() {
                 className={css.leftInput}
                 type="text"
                 name="minMileage"
-                value={filters.minMileage}
+                value={getDisplayValue("minMileage", filters.minMileage)}
                 onChange={handleMileageChange}
                 placeholder="From"
                 pattern="[0-9]*"
@@ -148,7 +152,7 @@ export default function Filters() {
                 className={css.rightInput}
                 type="text"
                 name="maxMileage"
-                value={filters.maxMileage}
+                value={getDisplayValue("maxMileage", filters.maxMileage)}
                 onChange={handleMileageChange}
                 placeholder="To"
                 pattern="[0-9]*"

@@ -4,6 +4,7 @@
     margin-bottom: 56px;
     align-items: center; 
     flex-wrap: wrap;
+    justify-content: center;
 
 }
 .form {
